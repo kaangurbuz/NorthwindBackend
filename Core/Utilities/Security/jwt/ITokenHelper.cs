@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 using Core.Entities.Concrete;
 using Entities.Concrete;
 
-namespace Business.Abstract
+namespace Core.Utilities.Security.jwt
 {
-    public interface IUserService
+    public interface ITokenHelper
     {
-        List<OperationClaim> GetClaims (User user);
-        void Add(User user);
-        User GetByMail (string mail);
+        AccessToken CreateToken(User user, List<OperationClaim> operationClaims);
     }
 }
