@@ -18,6 +18,12 @@ namespace Business.Concrete
         private IUserService _userService;
         private ITokenHelper _tokenHelper;
 
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
+        {
+            _userService = userService;
+            _tokenHelper = tokenHelper;
+        }
+
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
@@ -43,7 +49,7 @@ namespace Business.Concrete
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
 
-            if (HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash,
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash,
                     userToCheck.PasswordSalt))
             {
                 return new ErrorDataResult<User>(Messages.PasswordError);
